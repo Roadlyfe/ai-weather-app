@@ -1,13 +1,14 @@
 import { getClient } from "@/apollo-client"
 import CalloutCard from "@/components/CalloutCard";
+import StatCard from "@/components/StatCard";
 import fetchWeatherQuery from "@/graphql/queries/fetchWeatherQueries";
 
 type Props = {
-    params: {
-        city: string;
-        lat:  string;
-        long: string;
-    }
+  params: {
+    city: string;
+    lat: string;
+    long: string;
+  }
 }
 async function WeatherPage({ params: { city, lat, long } }: Props) {
   const client = getClient();
@@ -18,7 +19,7 @@ async function WeatherPage({ params: { city, lat, long } }: Props) {
       current_weather: "true",
       longitude: long,
       latitude: lat,
-      timezone: "GMT",
+      timezone: "PST",
     },
   });
 
@@ -36,18 +37,58 @@ async function WeatherPage({ params: { city, lat, long } }: Props) {
             <p className="text-sm text-gray-400">
               Last Updated at: {" "}
               {new Date(results.current_weather.time).toLocaleString()} (
-                {results.timezone})
+              {results.timezone})
             </p>
           </div>
+          <div className="m-2 mb-10">
+            <CalloutCard
+              message="This is where GPT-4 summary will go." />
+          </div>
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-5 m-2">
+            <StatCard
+              title="Maximum Temperture"
+              metric={`${results.daily.temperature_2m_max[0].toFixed(1)}°`}
+              color="yellow"
+            />
+            <StatCard
+              title="Minimum Temperture"
+              metric={`${results.daily.temperature_2m_min[0].toFixed(1)}°`}
+              color="green"
+            />
+            <div>
+              <StatCard
+                title="UV Index"
+                metric={`${results.daily.uv_index_max[0].toFixed(1)}°`}
+                color="rose"
+              />
+              {Number(results.daily.uv_index_max[0].toFixed(1)) > 5 && (
+                <CalloutCard
+                  message={"The UV is high today, be sure to wear SPF!"}
+                  warning
+                />
+              )}
+            </div>
+            <div className="flex space-x-3">
+            <StatCard
+                title="Wind Speed"
+                metric={`${results.current_weather.windspeed.toFixed(1)}m/s`}
+                color="cyan"
+              />
+               <StatCard
+                title="Wind Direction"
+                metric={`${results.current_weather.winddirection.toFixed(1)}°`}
+                color="violet"
+              />
+            </div>
+          </div>
+        </div>
+                <hr className="mb-5"/>
                 <div>
-                 <CalloutCard 
-                 message="This is where GPT-4 summary will go."/>
-                </div>
-        <div>
-          {/*  */}
-        </div>
-        </div>
+                  {/* TempChart */}
+                  {/* RainChart */}
+                  {/* HumidityChart */}
 
+                </div>
       </div>
     </div>
   )
