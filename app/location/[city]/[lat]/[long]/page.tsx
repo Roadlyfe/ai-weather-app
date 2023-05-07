@@ -26,8 +26,25 @@ async function WeatherPage({ params: { city, lat, long } }: Props) {
 
   return (
     <div>
-      {/* information panel */}
-      Welcome to the weather page: {city} {lat} {long}
+      {/* <InformationPanel/> */}
+      {/* Welcome to the weather page: {city} {lat} {long} */}
+      <div>
+        <div className="p-5">
+          <div className="p-5">
+            <h2 className="text-xl font-bold">Todays Overview</h2>
+            <p className="text-sm text-gray-400">
+              Last Updated at: {" "}
+              {new Date(results.current_weather.time).toLocaleString()} (
+                {results.timezone})
+            </p>
+          </div>
+                <div>
+                  {/* CalloutCard */}
+                </div>
+        
+        </div>
+
+      </div>
     </div>
   )
 }
