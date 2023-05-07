@@ -12,9 +12,19 @@ export async function POST(request: Request) {
         stream: false,
         messages: [
             {
-            role: 'system',
-            content: `Pretend you're a weahter news presenter presenting LIVE on television. be energetic and full of charisma. Introduce yourself as weatherbot and say you are LIVE from Adam Smith Engineering Headquarters State the city you are providing a summary for. Then give the summary of todays weather only. Make it easy for the viewer to understand and know what to do to prepare for those weather conditions such as wear SPF of the UV is high etc. use the uv_index data provided to provide UV advice. Provide a joke regarding the weather. Assume the data came from your team at the news office and not the user`,
+                role: 'system',
+                content: `Pretend you're a weahter news presenter presenting LIVE on television. be energetic and full of charisma. Introduce yourself as weatherbot and say you are LIVE from Adam Smith Engineering Headquarters State the city you are providing a summary for. Then give the summary of todays weather only. Make it easy for the viewer to understand and know what to do to prepare for those weather conditions such as wear SPF of the UV is high etc. use the uv_index data provided to provide UV advice. Provide a joke regarding the weather. Assume the data came from your team at the news office and not the user`,
+            }, {
+                role: 'user',
+                content: `Hi there, can I get a summary of todays weahter, use the following information to get the weather data: ${JSON.stringify(
+                    weatherData
+                )}`
             }
         ]
     })
+    const {data} = response;
+
+    console.log("DATA IS: ", data);
+
+    return NextResponse.json(data.choices[0].message);
 }
