@@ -28,15 +28,15 @@ async function WeatherPage({ params: { city, lat, long } }: Props) {
   console.log(results)
 
   return (
-    <div>
-      <InformationPanel 
-      city={city}
-      long={long}
-      lat={lat}
-      results={results}
+    <div className="flex flex-col min-h-screen md:flex-row">
+      <InformationPanel
+        city={city}
+        long={long}
+        lat={lat}
+        results={results}
       />
-     
-      <div>
+
+      <div className="flex-1 p-5 lg:p-10">
         <div className="p-5">
           <div className="p-5">
             <h2 className="text-xl font-bold">Todays Overview</h2>
@@ -75,12 +75,12 @@ async function WeatherPage({ params: { city, lat, long } }: Props) {
               )}
             </div>
             <div className="flex space-x-3">
-            <StatCard
+              <StatCard
                 title="Wind Speed"
                 metric={`${results.current_weather.windspeed.toFixed(1)}m/s`}
                 color="cyan"
               />
-               <StatCard
+              <StatCard
                 title="Wind Direction"
                 metric={`${results.current_weather.winddirection.toFixed(1)}°`}
                 color="violet"
@@ -88,13 +88,13 @@ async function WeatherPage({ params: { city, lat, long } }: Props) {
             </div>
           </div>
         </div>
-                <hr className="mb-5"/>
-                <div>
-                  {/* TempChart */}
-                  {/* RainChart */}
-                  {/* HumidityChart */}
+        <hr className="mb-5" />
+        <div>
+          {/* TempChart */}
+          {/* RainChart */}
+          {/* HumidityChart */}
 
-                </div>
+        </div>
       </div>
     </div>
   )
